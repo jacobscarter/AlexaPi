@@ -24,6 +24,8 @@ servers = ["127.0.0.1:11211"]
 mc = Client(servers, debug=1)
 path = os.path.realpath(__file__).rstrip(os.path.basename(__file__))
 
+print(path)
+
 
 
 def internet_on():
