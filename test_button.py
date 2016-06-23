@@ -2,6 +2,8 @@ import time
 import RPi.GPIO as GPIO
 #initialise a previous input variable to 0 (assume button not pressed last)
 prev_input = 0
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.IN)
 while True:
   #take a reading
   input = GPIO.input(18)
