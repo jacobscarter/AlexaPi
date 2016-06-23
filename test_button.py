@@ -1,4 +1,5 @@
 import time
+import RPi.GPIO as GPIO
 #initialise a previous input variable to 0 (assume button not pressed last)
 prev_input = 0
 while True:
