@@ -16,7 +16,7 @@ from memcache import Client
 #Settings
 button = 18 #GPIO Pin with button connected
 lights = [24, 25] # GPIO Pins with LED's conneted
-device = "plughw:1" # Name of your microphone/soundcard in arecord -L
+device = "plughw:Device" # Name of your microphone/soundcard in arecord -L
 
 #Setup
 recorded = False
@@ -80,7 +80,7 @@ def alexa():
        		"format": "audio/L16; rate=16000; channels=1"
    		}
 	}
-	with open(path+'recording.wav') as inf:
+	with open('/opt/packages/AlexaPi/recording.wav') as inf:
 		files = [
 				('file', ('request', json.dumps(d), 'application/json; charset=UTF-8')),
 				('file', ('audio', inf, 'audio/L16; rate=16000; channels=1'))
@@ -94,11 +94,11 @@ def alexa():
 		for d in data:
 			if (len(d) >= 1024):
 				audio = d.split('\r\n\r\n')[1].rstrip('--')
-		with open(path+"response.mp3", 'wb') as f:
+		with open("/opt/packages/AlexaPi/response.mp3", 'wb') as f:
 			f.write(audio)
 		GPIO.output(lights[1], GPIO.LOW)
 
-		os.system('mpg123 -q {}1sec.mp3 {}response.mp3 {}1sec.mp3'.format(path, path, path))
+		os.system('mpg123 -q /opt/packages/AlexaPi/1sec.mp3 /opt/packages/AlexaPi/response.mp3 /opt/packages/AlexaPi/1sec.mp3')
 		GPIO.output(lights[0], GPIO.LOW)
 	else:
 		GPIO.output(lights[1], GPIO.LOW)
@@ -127,7 +127,7 @@ def start():
 			l, data = inp.read()
 			if l:
 				audio += data
-		rf = open(path+'recording.wav', 'w')
+		rf = open('/opt/packages/AlexaPi/recording.wav', 'w')
 		rf.write(audio)
 		rf.close()
 		inp = None
@@ -145,7 +145,7 @@ if __name__ == "__main__":
 	while internet_on() == False:
 		print "."
 	token = gettoken()
-	os.system('mpg123 -q {}1sec.mp3 {}hello.mp3'.format(path, path))
+	os.system('mpg123 -q /opt/packages/AlexaPi/1sec.mp3 /opt/packages/AlexaPi/hello.mp3')
 	for x in range(0, 3):
 		time.sleep(.1)
 		GPIO.output(lights[0], GPIO.HIGH)
