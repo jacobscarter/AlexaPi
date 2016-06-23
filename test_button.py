@@ -1,14 +1,11 @@
 import RPi.GPIO as GPIO
-import time
-import os
 
-#adjust for where your switch is connected
-buttonPin = 18
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(buttonPin,GPIO.IN)
+GPIO.setup(18, GPIO.IN)
 
 while True:
-  #assuming the script to call is long enough we can ignore bouncing
-  if (GPIO.input(buttonPin)):
-    #this is the script that will be called (as root)
-    print("Button Pressed")
+  input_value = GPIO.input(18)
+  if input_value == False:
+    print('The Button Was Pressed!')
+    while input_value == False:
+      input_value = GPIO.input(18)
