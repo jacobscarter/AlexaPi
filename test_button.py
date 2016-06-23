@@ -4,8 +4,5 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.IN)
 
 while True:
-  input_value = GPIO.input(18)
-  if input_value == False:
-    print('The Button Was Pressed!')
-    while input_value == False:
-      input_value = GPIO.input(18)
+  while GPIO.input(18)==0:
+      print('The Button Was Pressed!')
